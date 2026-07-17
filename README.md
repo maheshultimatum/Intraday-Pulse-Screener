@@ -1,8 +1,7 @@
-# Trend-Predictor-Live
-Production-grade intraday signal engine. Fetches daily optimal weights via JSON bridge and generates real-time 5-minute interval technical dashboard signals during Indian market hours.
+# Intraday Pulse Screener
 
-
-
-Repository Prompt/Description:
-
-"Real-time algorithmic execution engine for Indian equities. Integrates with the Optimization Engine via JSON-API bridge to apply current-day hyperparameter weights. Produces automated 5-minute interval technical charts and BUY/SELL/HOLD decision signals during active market sessions."
+| Asset | Price | Fast/Slow | Trend | Signal |
+|---|---|---|---|---|
+| AAPL | 333.27 | 9/21 | UPTREND | **BUY** |
+| MSFT | 401.12 | 12/26 | DOWNTREND | **SELL** |
+| GOOGL | 354.29 | 10/20 | DOWNTREND | **SELL** |
