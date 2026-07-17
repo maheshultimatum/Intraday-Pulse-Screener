@@ -4,11 +4,27 @@ import numpy as np
 import mplfinance as mpf
 import pandas_ta as ta
 from sklearn.linear_model import LogisticRegression
+import os
+import requests
 
 WEIGHTS_URL = "https://raw.githubusercontent.com/maheshultimatum/Market-Weights-Lab/main/optimal_weights.json"
 
 def get_weights():
-    return requests.get(WEIGHTS_URL).json()
+    # Fetch the token from the environment variable provided by GitHub Actions
+    token = os.getenv("GH_PAT")
+    headers = {"Authorization": f"token {token}"}
+    
+    # Use the token to access your private Market-Weights-Lab repo
+    response = requests.get(
+        "https://api.github.com/repos/maheshultimatum/Market-Weights-Lab/contents/optimal_weights.json",
+        headers=headers
+    )
+    
+    # Note: When accessing contents via API, the file content is base64 encoded
+    # You will need to decode it:
+    import base64
+    content = response.json()['content']
+    return json.loads(base64.b64decode(content).decode('utf-8'))
 
 def run_screener():
     weights = get_weights()
