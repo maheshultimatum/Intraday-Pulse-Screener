@@ -57,18 +57,19 @@ def run_screener():
         latest_fast = float(df['Fast'].iloc[-1])
         latest_slow = float(df['Slow'].iloc[-1])
         
-        # Determine Trend and Intraday Signal
+      # Determine Trend
         trend = "UPTREND" if latest_fast > latest_slow else "DOWNTREND"
-        signal = "BUY" if latest_close > latest_fast and trend == "UPTREND" else "SELL"
         
-        results.append({
-            "Asset": ticker,
-            "Price": round(latest_close, 2),
-            "Fast/Slow": f"{params['fast']}/{params['slow']}",
-            "Trend": trend,
-            "Signal": signal
-        })
-        
+        # Determine Explicit Intraday Signals
+        if trend == "UPTREND":
+            # If price is above fast EMA during an uptrend, it's a clear momentum BUY
+            # If it dips below, it's just a pullback—so we HOLD our positions
+            signal = "BUY" if latest_close > latest_fast else "HOLD"
+        else:
+            # If trend is DOWN and price drops below the fast EMA, it's a clear momentum SHORT/SELL
+            # If it rallies above the fast EMA during a downtrend, we wait and HOLD
+            signal = "SELL" if latest_close < latest_fast else "HOLD"
+            
     update_readme(results)
 
 def update_readme(results):
