@@ -1,17 +1,9 @@
 {
-  "AAPL": {
-    "weight": 0.25,
-    "fast": 9,
-    "slow": 21
-  },
-  "MSFT": {
-    "weight": 0.25,
-    "fast": 12,
-    "slow": 26
-  },
-  "GOOGL": {
-    "weight": 0.20,
-    "fast": 10,
-    "slow": 20
-  }
+    "SBIN.NS": {"weight": 0.14, "fast": 5, "slow": 31},
+    "DRREDDY.NS": {"weight": 0.14, "fast": 5, "slow": 31},
+    "TITAN.NS": {"weight": 0.14, "fast": 5, "slow": 31},
+    "BAJAJFINSV.NS": {"weight": 0.14, "fast": 5, "slow": 31},
+    "TRENT.NS": {"weight": 0.14, "fast": 5, "slow": 31},
+    "MARUTI.NS": {"weight": 0.15, "fast": 5, "slow": 31},
+    "BAJFINANCE.NS": {"weight": 0.15, "fast": 5, "slow": 31}
 }
