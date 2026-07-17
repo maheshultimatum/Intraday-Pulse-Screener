@@ -4,10 +4,20 @@ import pandas_ta as ta
 import yfinance as yf
 
 def get_weights():
-    url = "https://api.github.com/repos/maheshultimatum/Market-Weights-Lab/contents/optimal_weights.json"
-    headers = {"Authorization": f"token {os.getenv('GH_PAT')}"}
-    content = requests.get(url, headers=headers).json()['content']
-    return json.loads(base64.b64decode(content).decode('utf-8'))
+    # Ensure this matches your ACTUAL repo name and branch
+    url = "https://api.github.com/repos/maheshultimatum/Market-Weights-Lab/contents/optimal_weights.json?ref=main"
+    headers = {
+        "Authorization": f"token {os.getenv('GH_PAT')}",
+        "Accept": "application/vnd.github.v3+json"
+    }
+    response = requests.get(url, headers=headers)
+    data = response.json()
+    
+    if 'content' not in data:
+        print(f"API Error Response: {data}") # This will print the error in your Action log
+        raise KeyError("Could not find 'content' in GitHub API response.")
+        
+    return json.loads(base64.b64decode(data['content']).decode('utf-8'))
 
 def run_screener():
     weights = get_weights()
