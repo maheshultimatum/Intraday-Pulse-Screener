@@ -86,7 +86,8 @@ def run_screener():
 def update_readme(results):
     # Construct the Markdown Dashboard
     markdown_table = "# Intraday Pulse Screener\n\n"
-    markdown_table += "| Asset | Price | Fast/Slow | Trend | Signal |\n"
+    # Update the header line below
+    markdown_table += "| Asset | Price | Fast (5 EMA) / Slow (31 EMA) | Trend | Signal |\n"
     markdown_table += "|---|---|---|---|---|\n"
     
     for row in results:
