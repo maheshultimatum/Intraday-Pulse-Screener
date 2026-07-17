@@ -1,42 +1,36 @@
-import os
 import json
-import base64
-import requests
 import pandas as pd
-import pandas_ta as ta
 import yfinance as yf
+import pandas_ta as ta
 
 def get_weights():
-    # Fetch parameters dynamically from your Lab repository
-    url = "https://api.github.com/repos/maheshultimatum/Market-Weights-Lab/contents/optimal_weights.json?ref=main"
-    headers = {
-        "Authorization": f"token {os.getenv('GH_PAT')}",
-        "Accept": "application/vnd.github.v3+json"
-    }
-    response = requests.get(url, headers=headers)
-    data = response.json()
-    
-    if 'content' not in data:
-        print(f"API Error Response: {data}")
-        raise KeyError("Could not find 'content' in GitHub API response.")
-        
-    return json.loads(base64.b64decode(data['content']).decode('utf-8'))
+    # Adjust this path or URL if you pull your JSON from a different location
+    try:
+        with open('optimal_weights.json', 'r') as f:
+            return json.load(f)
+    except FileNotFoundError:
+        print("Error: optimal_weights.json not found.")
+        return {}
 
 def run_screener():
     weights = get_weights()
-    tickers = list(weights.keys()) # Extracts the .NS tickers dynamically
+    if not weights:
+        return []
+        
+    tickers = list(weights.keys())
     results = []
     
     for ticker in tickers:
         params = weights[ticker]
         
-        # Download 1 day of 5-minute intraday data
-        df = yf.Ticker(ticker).history(period='1d', interval='5m')
+        # Download 5 days of 5-minute data to prevent after-hours empty data errors
+        df = yf.Ticker(ticker).history(period='5d', interval='5m')
         
         if df.empty:
+            print(f"Warning: No data found for {ticker}")
             continue
             
-      # Calculate EMAs
+        # Calculate EMAs
         df['Fast'] = ta.ema(df['Close'], length=params['fast'])
         df['Slow'] = ta.ema(df['Close'], length=params['slow'])
         
@@ -50,43 +44,52 @@ def run_screener():
                 "Trend": "INIT",
                 "Signal": "WAIT"
             })
-            continue # Move to the next ticker without crashing
+            continue 
             
         # If data is sufficient, proceed with calculations
         latest_close = float(df['Close'].iloc[-1])
         latest_fast = float(df['Fast'].iloc[-1])
         latest_slow = float(df['Slow'].iloc[-1])
         
-      # Determine Trend
+        # Determine Trend
         trend = "UPTREND" if latest_fast > latest_slow else "DOWNTREND"
         
-        # Determine Explicit Intraday Signals
+        # Determine Intraday Signal
         if trend == "UPTREND":
-            # If price is above fast EMA during an uptrend, it's a clear momentum BUY
-            # If it dips below, it's just a pullback—so we HOLD our positions
             signal = "BUY" if latest_close > latest_fast else "HOLD"
         else:
-            # If trend is DOWN and price drops below the fast EMA, it's a clear momentum SHORT/SELL
-            # If it rallies above the fast EMA during a downtrend, we wait and HOLD
             signal = "SELL" if latest_close < latest_fast else "HOLD"
             
-    update_readme(results)
+        results.append({
+            "Asset": ticker,
+            "Price": round(latest_close, 2),
+            "Fast/Slow": f"{params['fast']}/{params['slow']}",
+            "Trend": trend,
+            "Signal": signal
+        })
+        
+    return results
 
 def update_readme(results):
-    # Construct the Markdown Dashboard
     markdown_table = "# Intraday Pulse Screener\n\n"
-    # Update the header line below
     markdown_table += "| Asset | Price | Fast (5 EMA) / Slow (31 EMA) | Trend | Signal |\n"
     markdown_table += "|---|---|---|---|---|\n"
     
     for row in results:
-        markdown_table += f"| {row['Asset']} | {row['Price']} | {row['Fast/Slow']} | {row['Trend']} | **{row['Signal']}** |\n"
+        trend_display = f"**{row['Trend']}**" if row['Trend'] != "INIT" else row['Trend']
+        signal_display = f"**{row['Signal']}**" if row['Signal'] != "WAIT" else row['Signal']
         
-    # Write to README.md
+        markdown_table += f"| {row['Asset']} | {row['Price']} | {row['Fast/Slow']} | {trend_display} | {signal_display} |\n"
+        
+    # 'w' mode overwrites the file completely, preventing duplicate rows
     with open("README.md", "w") as f:
         f.write(markdown_table)
         
-    print("README.md updated successfully with NSE signals.")
+    print("README.md updated successfully.")
 
 if __name__ == "__main__":
-    run_screener()
+    screener_results = run_screener()
+    if screener_results:
+        update_readme(screener_results)
+    else:
+        print("No results to update.")
