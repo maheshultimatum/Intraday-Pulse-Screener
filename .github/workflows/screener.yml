@@ -1,0 +1,9 @@
+jobs:
+  run-screener:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Python Script
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}  # <--- This injects the secret
+        run: python main.py
