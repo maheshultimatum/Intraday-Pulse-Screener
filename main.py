@@ -36,20 +36,38 @@ def run_screener():
         if df.empty:
             continue
             
-       # Calculate EMAs
+      # Calculate EMAs
         df['Fast'] = ta.ema(df['Close'], length=params['fast'])
         df['Slow'] = ta.ema(df['Close'], length=params['slow'])
         
-        # Check if the calculation resulted in valid numbers
+        # Check for NaN/None values caused by insufficient data
         if df['Fast'].iloc[-1] is None or pd.isna(df['Fast'].iloc[-1]) or \
            df['Slow'].iloc[-1] is None or pd.isna(df['Slow'].iloc[-1]):
-            print(f"Insufficient data for {ticker}, skipping...")
-            continue
+            results.append({
+                "Asset": ticker,
+                "Price": round(float(df['Close'].iloc[-1]), 2),
+                "Fast/Slow": f"{params['fast']}/{params['slow']}",
+                "Trend": "INIT",
+                "Signal": "WAIT"
+            })
+            continue # Move to the next ticker without crashing
             
-        # Now it is safe to convert to float
+        # If data is sufficient, proceed with calculations
         latest_close = float(df['Close'].iloc[-1])
         latest_fast = float(df['Fast'].iloc[-1])
         latest_slow = float(df['Slow'].iloc[-1])
+        
+        # Determine Trend and Intraday Signal
+        trend = "UPTREND" if latest_fast > latest_slow else "DOWNTREND"
+        signal = "BUY" if latest_close > latest_fast and trend == "UPTREND" else "SELL"
+        
+        results.append({
+            "Asset": ticker,
+            "Price": round(latest_close, 2),
+            "Fast/Slow": f"{params['fast']}/{params['slow']}",
+            "Trend": trend,
+            "Signal": signal
+        })
         
         # Determine Trend and Intraday Signal
         trend = "UPTREND" if latest_fast > latest_slow else "DOWNTREND"
