@@ -23,10 +23,11 @@ jobs:
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: python main.py
-      - name: Commit and Push Dashboard
+      - name: Commit and Push New Signals
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
           git add README.md
           git commit -m "Update signals" || echo "No changes to commit"
-          git push
+          git pull --rebase origin main
+          git push origin main
