@@ -1,8 +1,11 @@
 name: Run Screener
 on:
   schedule:
-    - cron: '*/5 4-6 * * 1-5'
-    - cron: '*/5 8-9 * * 1-5'
+    # Run every 5 minutes from 03:45 UTC (09:15 IST) to 10:00 UTC (15:30 IST)
+    # The cron string below covers the window: 9:15 AM to 3:30 PM IST, Mon-Fri
+    - cron: '45-59 3 * * 1-5'
+    - cron: '*/5 4-9 * * 1-5'
+    - cron: '0 10 * * 1-5'
   workflow_dispatch:
 
 jobs:
