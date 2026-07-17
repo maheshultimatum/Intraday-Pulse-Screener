@@ -1,7 +1,17 @@
 {
-  "AAPL": 0.25,
-  "MSFT": 0.25,
-  "GOOGL": 0.20,
-  "AMZN": 0.15,
-  "TSLA": 0.15
+  "AAPL": {
+    "weight": 0.25,
+    "fast": 9,
+    "slow": 21
+  },
+  "MSFT": {
+    "weight": 0.25,
+    "fast": 12,
+    "slow": 26
+  },
+  "GOOGL": {
+    "weight": 0.20,
+    "fast": 10,
+    "slow": 20
+  }
 }
