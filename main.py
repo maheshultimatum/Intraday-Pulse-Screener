@@ -69,18 +69,6 @@ def run_screener():
             "Signal": signal
         })
         
-        # Determine Trend and Intraday Signal
-        trend = "UPTREND" if latest_fast > latest_slow else "DOWNTREND"
-        signal = "BUY" if latest_close > latest_fast and trend == "UPTREND" else "SELL"
-        
-        results.append({
-            "Asset": ticker,
-            "Price": round(latest_close, 2),
-            "Fast/Slow": f"{params['fast']}/{params['slow']}",
-            "Trend": trend,
-            "Signal": signal
-        })
-        
     update_readme(results)
 
 def update_readme(results):
