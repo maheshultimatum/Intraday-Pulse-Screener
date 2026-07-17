@@ -36,11 +36,17 @@ def run_screener():
         if df.empty:
             continue
             
-        # Calculate EMAs using your pandas-ta syntax
+       # Calculate EMAs
         df['Fast'] = ta.ema(df['Close'], length=params['fast'])
         df['Slow'] = ta.ema(df['Close'], length=params['slow'])
         
-        # Extract the most recent data points
+        # Check if the calculation resulted in valid numbers
+        if df['Fast'].iloc[-1] is None or pd.isna(df['Fast'].iloc[-1]) or \
+           df['Slow'].iloc[-1] is None or pd.isna(df['Slow'].iloc[-1]):
+            print(f"Insufficient data for {ticker}, skipping...")
+            continue
+            
+        # Now it is safe to convert to float
         latest_close = float(df['Close'].iloc[-1])
         latest_fast = float(df['Fast'].iloc[-1])
         latest_slow = float(df['Slow'].iloc[-1])
