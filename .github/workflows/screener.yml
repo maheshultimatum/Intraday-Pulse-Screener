@@ -1,9 +1,27 @@
+name: Run Screener
+on:
+  schedule:
+    - cron: '0-55/5 4-6, 8-9 * * 1-5' # Covers 9:30-11:30 and 13:30-15:00 IST
+  workflow_dispatch:
+
 jobs:
-  run-screener:
+  screen:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Run Python Script
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with: {python-version: '3.10'}
+      - name: Install dependencies
+        run: pip install requests pandas pandas_ta scikit-learn mplfinance
+      - name: Run Screener
         env:
-          GH_PAT: ${{ secrets.GH_PAT }}  # <--- This injects the secret
+          GH_PAT: ${{ secrets.GH_PAT }} # Uses the Secret you added to this repo
         run: python main.py
+      - name: Commit and Push Dashboard
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add README.md
+          git commit -m "Update signals" || echo "No changes to commit"
+          git push
