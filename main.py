@@ -31,7 +31,7 @@ def run_screener():
         params = weights[ticker]
         
         # Download 1 day of 5-minute intraday data
-        df = yf.download(ticker, period='1d', interval='5m', progress=False)
+        df = yf.Ticker(ticker).history(period='1d', interval='5m')
         
         if df.empty:
             continue
