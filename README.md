@@ -14,13 +14,13 @@ An automated, data-driven trading tool designed to screen Indian market equities
 
 | Asset | Price | Fast (5 EMA) / Slow (31 EMA) | Trend | Signal |
 |---|---|---|---|---|
-| SBIN.NS | 1060.6 | 5/31 | **UPTREND** | **BUY** |
-| DRREDDY.NS | 1221.5 | 5/31 | **DOWNTREND** | **SELL** |
-| TITAN.NS | 4646.3 | 5/31 | **UPTREND** | **BUY** |
-| BAJAJFINSV.NS | 1861.5 | 5/31 | **UPTREND** | **HOLD** |
-| TRENT.NS | 2925.9 | 5/31 | **UPTREND** | **HOLD** |
-| MARUTI.NS | 13514.0 | 5/31 | **UPTREND** | **BUY** |
-| BAJFINANCE.NS | 1064.0 | 5/31 | **UPTREND** | **HOLD** |
+| SBIN.NS | 1049.5 | 5/31 | **DOWNTREND** | **SELL** |
+| DRREDDY.NS | 1206.4 | 5/31 | **DOWNTREND** | **SELL** |
+| TITAN.NS | 4672.4 | 5/31 | **UPTREND** | **HOLD** |
+| BAJAJFINSV.NS | 1880.5 | 5/31 | **UPTREND** | **HOLD** |
+| TRENT.NS | 2906.0 | 5/31 | **DOWNTREND** | **SELL** |
+| MARUTI.NS | 13372.0 | 5/31 | **DOWNTREND** | **SELL** |
+| BAJFINANCE.NS | 1065.4 | 5/31 | **DOWNTREND** | **SELL** |
 
 ---
 
