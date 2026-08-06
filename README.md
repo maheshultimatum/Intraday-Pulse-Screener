@@ -20,7 +20,7 @@ An automated, data-driven trading tool designed to screen Indian market equities
 | BAJAJFINSV.NS | 2086.0 | 5/31 | **DOWNTREND** | **SELL** |
 | TRENT.NS | 3107.1 | 5/31 | **DOWNTREND** | **SELL** |
 | MARUTI.NS | 14080.0 | 5/31 | **UPTREND** | **BUY** |
-| BAJFINANCE.NS | 1151.8 | 5/31 | **DOWNTREND** | **HOLD** |
+| BAJFINANCE.NS | 1144.8 | 5/31 | **DOWNTREND** | **SELL** |
 
 ---
 
