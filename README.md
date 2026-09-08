@@ -17,10 +17,10 @@ An automated, data-driven trading tool designed to screen Indian market equities
 | SBIN.NS | 1008.0 | 5/31 | **UPTREND** | **HOLD** |
 | DRREDDY.NS | 1151.0 | 5/31 | **DOWNTREND** | **HOLD** |
 | TITAN.NS | 4987.0 | 5/31 | **DOWNTREND** | **SELL** |
-| BAJAJFINSV.NS | 1939.0 | 5/31 | **DOWNTREND** | **SELL** |
-| TRENT.NS | 2800.0 | 5/31 | **UPTREND** | **HOLD** |
+| BAJAJFINSV.NS | 1938.1 | 5/31 | **DOWNTREND** | **SELL** |
+| TRENT.NS | 2793.6 | 5/31 | **UPTREND** | **HOLD** |
 | MARUTI.NS | 12641.0 | 5/31 | **DOWNTREND** | **HOLD** |
-| BAJFINANCE.NS | 1056.5 | 5/31 | **UPTREND** | **BUY** |
+| BAJFINANCE.NS | 1054.1 | 5/31 | **DOWNTREND** | **SELL** |
 
 ---
 
