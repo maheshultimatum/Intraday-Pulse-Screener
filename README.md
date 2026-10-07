@@ -19,7 +19,7 @@ An automated, data-driven trading tool designed to screen Indian market equities
 | TITAN.NS | 4377.0 | 5/31 | **DOWNTREND** | **HOLD** |
 | BAJAJFINSV.NS | 1743.3 | 5/31 | **UPTREND** | **BUY** |
 | TRENT.NS | 2890.3 | 5/31 | **DOWNTREND** | **SELL** |
-| MARUTI.NS | 11450.0 | 5/31 | **UPTREND** | **HOLD** |
+| MARUTI.NS | 11499.0 | 5/31 | **UPTREND** | **BUY** |
 | BAJFINANCE.NS | 963.85 | 5/31 | **DOWNTREND** | **SELL** |
 
 ---
